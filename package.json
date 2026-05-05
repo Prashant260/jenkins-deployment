@@ -1,5 +1,9 @@
 {
   "name": "jenkins-docker-app",
   "version": "1.0.0",
-  "main": "app.js"
+  "description": "A small full-stack Node.js app with a frontend and backend API.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  }
 }
