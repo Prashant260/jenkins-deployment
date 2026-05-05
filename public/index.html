@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jenkins Full Stack App</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Frontend + Backend</p>
+        <h1>Ship a tiny full-stack app through Jenkins.</h1>
+        <p class="intro">
+          This page is served by Node.js, talks to backend API routes, and is
+          ready to run locally or inside Docker.
+        </p>
+        <div class="actions">
+          <button id="checkHealth">Check Backend</button>
+          <span id="healthStatus" class="status">Waiting for check</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">API Demo</p>
+            <h2>Deployment Tasks</h2>
+          </div>
+          <span class="pill">/api/tasks</span>
+        </div>
+
+        <form id="taskForm" class="task-form">
+          <input
+            id="taskInput"
+            type="text"
+            placeholder="Add a deployment task"
+            autocomplete="off"
+          />
+          <button type="submit">Add Task</button>
+        </form>
+
+        <ul id="taskList" class="task-list"></ul>
+      </section>
+    </main>
+
+    <script src="/script.js"></script>
+  </body>
+</html>
