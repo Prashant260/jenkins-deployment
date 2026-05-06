@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'Prashant260/jenkins-fullstack-app'
+        IMAGE_NAME = 'prashant260/jenkins-fullstack-app'
         CONTAINER_NAME = 'jenkins-fullstack-app-test'
         APP_PORT = '3000'
         SONAR_SCANNER_HOME = tool 'sonar-scanner'
