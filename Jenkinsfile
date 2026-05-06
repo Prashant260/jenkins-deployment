@@ -8,18 +8,28 @@ pipeline {
     SONAR_SCANNER_HOME = tool 'SonarScanner'
   }
 
-  node {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner"
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
     }
-  }
-}
 
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh '$SONAR_SCANNER_HOME/bin/sonar-scanner'
+        }
+      }
+    }
+
+    stage('SonarQube Quality Gate') {
+      steps {
+        timeout(time: 5, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
 
     stage('Build Docker Image') {
       steps {
@@ -55,4 +65,4 @@ pipeline {
       echo 'Pipeline failed. Check the stage logs above.'
     }
   }
-
+}
