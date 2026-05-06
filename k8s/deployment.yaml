@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-fullstack-app
+  labels:
+    app: jenkins-fullstack-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-fullstack-app
+  template:
+    metadata:
+      labels:
+        app: jenkins-fullstack-app
+    spec:
+      containers:
+        - name: jenkins-fullstack-app
+          image: prashant260/jenkins-fullstack-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20

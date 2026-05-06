@@ -77,6 +77,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy To Minikube') {
+            steps {
+                sh '''
+                kubectl apply -f k8s/
+                kubectl set image deployment/jenkins-fullstack-app \
+                jenkins-fullstack-app=$IMAGE_NAME:$BUILD_NUMBER
+                kubectl rollout status deployment/jenkins-fullstack-app --timeout=120s
+                '''
+            }
+        }
     }
 
     post {
