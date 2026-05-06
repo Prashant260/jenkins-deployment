@@ -5,12 +5,26 @@ pipeline {
     IMAGE_NAME = 'jenkins-fullstack-app'
     CONTAINER_NAME = 'jenkins-fullstack-app-test'
     APP_PORT = '3000'
+    SONAR_SCANNER_HOME = tool 'SonarScanner'
   }
 
-  stages {
-    stage('Checkout') {
+  node {
+  stage('SCM') {
+    checkout scm
+  }
+  stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarScanner';
+    withSonarQubeEnv() {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+  }
+}
+
+    stage('SonarQube Quality Gate') {
       steps {
-        checkout scm
+        timeout(time: 5, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
       }
     }
 
@@ -48,4 +62,4 @@ pipeline {
       echo 'Pipeline failed. Check the stage logs above.'
     }
   }
-}
+
