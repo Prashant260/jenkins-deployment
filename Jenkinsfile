@@ -5,11 +5,7 @@ pipeline {
         IMAGE_NAME = 'jenkins-fullstack-app'
         CONTAINER_NAME = 'jenkins-fullstack-app-test'
         APP_PORT = '3000'
-       
-    }
-
-    tools {
-        sonarQubeScanner 'sonar-scanner'
+        SONAR_SCANNER_HOME = tool 'sonar-scanner'
     }
 
     stages {
@@ -26,7 +22,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
 
                     sh '''
-                    sonar-scanner \
+                    $SONAR_SCANNER_HOME/bin/sonar-scanner \
                     -Dsonar.projectKey=jenkins-fullstack-app \
                     -Dsonar.sources=.
                     '''
