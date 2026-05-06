@@ -5,6 +5,8 @@ pipeline {
     IMAGE_NAME = 'jenkins-fullstack-app'
     CONTAINER_NAME = 'jenkins-fullstack-app-test'
     APP_PORT = '3000'
+    K8S_DEPLOYMENT = 'jenkins-fullstack-app'
+    K8S_CONTAINER = 'jenkins-fullstack-app'
     SONAR_SCANNER_HOME = tool 'SonarScanner'
   }
 
@@ -48,21 +50,5 @@ pipeline {
       }
     }
   }
-
-  post {
-    always {
-      sh '''
-        docker rm -f $CONTAINER_NAME || true
-        docker image prune -f || true
-      '''
-    }
-
-    success {
-      echo 'Pipeline completed successfully.'
-    }
-
-    failure {
-      echo 'Pipeline failed. Check the stage logs above.'
-    }
-  }
 }
+   
